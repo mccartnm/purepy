@@ -161,7 +161,7 @@ class PureVirtualMeta(type):
         def _signature(name, proper, wrong):
             wrong_layout = inspect.signature(wrong)
             proper_layout = inspect.signature(proper)
-            return f"def {name}{wrong_layout}: -> def {name}{proper_layout}:"
+            return "def {name}{wrong_layout}: -> def {name}{proper_layout}:".format(**locals())
 
         def _iterate(base):
             """
