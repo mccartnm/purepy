@@ -1,0 +1,6 @@
+*.pyc
+MANIFEST
+dist/
+wheelhouse/
+build/
+purepy.egg-info/
