@@ -35,7 +35,9 @@ Example:
         def blarg(self, foo, bar):
             pass
 """
+from __future__ import absolute_import
 
+from purepy import util
 import uuid
 import inspect
 
@@ -221,7 +223,8 @@ pure_virtual = PureVirtualMeta.new() # Default Global Register
 if __name__ == "__main__":
     my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)
 
-    class Interface(metaclass=PureVirtualMeta):
+    @util.add_metaclass(PureVirtualMeta)
+    class Interface(object):
 
         pv_allow_base_instance = True
 

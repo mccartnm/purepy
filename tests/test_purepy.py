@@ -7,21 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import unittest
 from purepy import PureVirtualMeta, PureVirtualError, pure_virtual
-
-def add_metaclass(metaclass):
-    '''!
-    Taken from the six module. Python 2 and 3 compatible.
-    '''
-    def wrapper(cls):
-        """
-        The actual wrapper. take the given class and return one that
-        contains the proper metaclass.
-        """
-        orig_vars = cls.__dict__.copy()
-        orig_vars.pop('__dict__', None)
-        orig_vars.pop('__weakref__', None)
-        return metaclass(cls.__name__, cls.__bases__, orig_vars)
-    return wrapper
+from purepy.util import add_metaclass
 
 class BasicPurePyTestCase(unittest.TestCase):
 
