@@ -75,7 +75,10 @@ class PureVirtualMeta(type):
         if functions:
             functions = ', '.join(map(lambda x: x.__name__, functions))
             raise PureVirtualError("Cannot instantiate pure virtual class " +\
-                                   f"'{inst.__class__.__name__}' with pure virtual functions: ({functions})")
+                                   "'{}' with pure virtual functions: ({})".format(
+                                        inst.__class__.__name__,
+                                        functions
+                                    ))
         return inst
 
     # -- Class Methods (Publish Interface)
