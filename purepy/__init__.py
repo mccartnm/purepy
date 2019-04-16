@@ -73,7 +73,7 @@ class PureVirtualMeta(type):
 
         functions = PureVirtualMeta.pure_virtual_functions(inst)
         if functions:
-            functions = ', '.join(functions)
+            functions = ', '.join(map(lambda x: x.__name__, functions))
             raise PureVirtualError("Cannot instantiate pure virtual class " +\
                                    f"'{inst.__class__.__name__}' with pure virtual functions: ({functions})")
         return inst
@@ -81,14 +81,20 @@ class PureVirtualMeta(type):
     # -- Class Methods (Publish Interface)
 
     @classmethod
-    def new_class(cls, name):
+    def new_class(cls, name, **kwargs):
         """
         When we want to begin a new class, this 
         """
         cls._registry[name] = []
-        def pure_virtual(func, *args, **kwargs):
-            func._is_pure_virtual = True
-            func._pure_virtual_id = name
+        def pure_virtual(func, *args, **func_kwargs):
+            """
+            Decorator to splay across our pure virtual functions
+            """
+            func._pv_is_pure_virtual = True
+            func._pv_virtual_id = name
+            func._pv_strict_types = kwargs.get("strict_types", True)
+            func._pv_strict_defaults = kwargs.get("strict_defaults", True)
+
             cls._registry.setdefault(name, []).append(func)
             return func
 
@@ -98,7 +104,7 @@ class PureVirtualMeta(type):
         return pure_virtual
 
     @classmethod
-    def new(cls):
+    def new(cls, **kwargs):
         """
         Simpler call for the new_class() above - handles the registry name internally
         :return: Decorator function that can be used at a per-class level.
@@ -108,7 +114,7 @@ class PureVirtualMeta(type):
             while this_id in cls._registry:
                 this_id = uuid.uuid4() # Should never really happen
             return this_id
-        return cls.new_class(_get_uuid())
+        return cls.new_class(_get_uuid(), **kwargs)
 
     @classmethod
     def pure_virtual_functions(cls, instance):
@@ -117,8 +123,8 @@ class PureVirtualMeta(type):
         """
         funcs = []
         for name, call in inspect.getmembers(instance, predicate=inspect.isroutine):
-            if getattr(call, '_is_pure_virtual', None):
-                funcs.append(name)
+            if getattr(call, '_pv_is_pure_virtual', None):
+                funcs.append(call)
         return funcs
 
     @classmethod
@@ -163,16 +169,22 @@ class PureVirtualMeta(type):
 
             for name, call in inspect.getmembers(base, predicate=inspect.isroutine):
 
-                print ("CALL", call)
-                if getattr(call, '_is_pure_virtual', None):
+                if getattr(call, '_pv_is_pure_virtual', None):
                     attr = getattr(cls, name)
                     if call.__code__ is attr.__code__:
                         # Check 1: Have we overloaded all functions?
                         must_overload.add("def {}{}".format(call.__name__, inspect.signature(call)))
                     elif getattr(base, 'pv_explicit_args', True):
                         # Check 2: Do the arguments line up?
-                        proper = inspect.getfullargspec(call)
-                        attr_sig = inspect.getfullargspec(attr)
+                        proper = inspect.getfullargspec(call)._asdict()
+                        attr_sig = inspect.getfullargspec(attr)._asdict()
+                        if not call._pv_strict_types:
+                            proper.pop('annotations')
+                            attr_sig.pop('annotations')
+                        if not call._pv_strict_defaults:
+                            proper.pop('defaults')
+                            attr_sig.pop('defaults')
+
                         if proper != attr_sig:
                             wrong_signature.add(_signature(call.__name__, call, attr))
 
@@ -205,17 +217,18 @@ pure_virtual = PureVirtualMeta.new() # Default Global Register
 
 
 if __name__ == "__main__":
+    my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)
+
     class Interface(metaclass=PureVirtualMeta):
 
-        @pure_virtual
-        def save(self, filepath=None):
-            raise NotImplementedError()
+        pv_allow_base_instance = True
 
-        @pure_virtual
-        def load(self, filepath=None):
+        @my_pure_virtual
+        def save(self, filepath: str=None):
             raise NotImplementedError()
 
     class Overload(Interface):
+        def save(self, filepath = "bar"):
+            print ("foo")
 
-        def save(self, filepath=None):
-            print ("Saving")
+    print (PureVirtualMeta.pure_virtual_functions(Interface))
