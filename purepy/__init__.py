@@ -215,7 +215,6 @@ class PureVirtualMeta(type):
 
 pure_virtual = PureVirtualMeta.new() # Default Global Register
 
-
 if __name__ == "__main__":
     my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)
 
