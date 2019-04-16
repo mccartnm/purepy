@@ -229,7 +229,7 @@ if __name__ == "__main__":
         pv_allow_base_instance = True
 
         @my_pure_virtual
-        def save(self, filepath: str=None):
+        def save(self, filepath=None):
             raise NotImplementedError()
 
     class Overload(Interface):
