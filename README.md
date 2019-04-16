@@ -23,7 +23,7 @@ the right functionality and signatures without needing to write additional test 
 interpreter to make an instance of an ABCMeta object for it to fail.
 
 ## The Advantage
-We first took a stab with the `abc.ABCMeta` object from Pythons default libs but ran into the issue of
+We first took a stab with the [`abc.ABCMeta`][2] object from Pythons default libs but ran into the issue of
 
 > I can do whatever I want and _until_ the object is made, it will be wrong!
 
@@ -194,6 +194,9 @@ print (PureVirtualMeta.pure_virtual_functions(Interface))
 # [<function Interface.save at ...>]
 print (PureVirtualMeta.pure_virtual_functions(Interface()))
 # [<function Interface.save at ...>]
+print (PureVirtualMeta.is_pure_virtual_class(Interface))
+# True
 ```
 
 [1]:(https://docs.python.org/3/library/abc.html#abc.abstractmethod)
+[2]:(https://docs.python.org/3/library/abc.html)
