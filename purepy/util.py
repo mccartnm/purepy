@@ -18,7 +18,7 @@ else:
     def _custom_sig(func):
         spec = getfullargspec(func)
         sig = ""
-        defauts = []
+        defaults = []
         args = []
         if spec.defaults:
             args = spec.args[:len(spec.defaults)]
