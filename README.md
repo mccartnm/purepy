@@ -4,8 +4,10 @@ Pure virtual class functionality in Python.
 
 A _very_ small metaclass to do some of the testing for us.
 
-- Master: [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=master)](https://travis-ci.com/mccartnm/purepy)
-- Dev: [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=dev)](https://travis-ci.com/mccartnm/purepy)
+Branch | Status
+--- | ---
+Master | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=master)](https://travis-ci.com/mccartnm/purepy)
+Dev | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=dev)](https://travis-ci.com/mccartnm/purepy)
 
 ## The What
 In C++ and other strong typed, OOP, languages, we use virtual classes and pure virtual classes to help

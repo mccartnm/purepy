@@ -12,6 +12,7 @@ setup(
     description='Minor utilites for developing pure virtual classes.',
     author='Michael McCartney',
     long_description=ld,
+    long_description_content_type="text/markdown",
     url = 'https://github.com/mccartnm/purepy',
     author_email='mccartneyworks@gmail.com',
     keywords=[
