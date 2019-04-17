@@ -185,6 +185,7 @@ class PureVirtualMeta(type):
                         # Check 2: Do the arguments line up?
                         proper = util.getfullargspec(call)._asdict()
                         attr_sig = util.getfullargspec(attr)._asdict()
+
                         if not call._pv_strict_types:
                             proper.pop('annotations')
                             attr_sig.pop('annotations')

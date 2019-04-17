@@ -12,13 +12,13 @@ if PY3:
     getfullargspec = inspect.getfullargspec
     signature = inspect.signature
 
-else:
+else: # pragma: no cover
     getfullargspec = inspect.getargspec
 
     def _custom_sig(func):
         spec = getfullargspec(func)
         sig = ""
-        defauts = []
+        defaults = []
         args = []
         if spec.defaults:
             args = spec.args[:len(spec.defaults)]
