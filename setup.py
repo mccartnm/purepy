@@ -7,11 +7,13 @@ with open('README.md') as f:
 setup(
     name='purepy',
     version='0.8.0',
-    packages=find_packages(),
+    packages=['purepy'],
     license='MIT',
     description='Minor utilites for developing pure virtual classes.',
     author='Michael McCartney',
     long_description=ld,
+    url = 'https://github.com/mccartnm/purepy',
+    author_email='mccartneyworks@gmail.com',
     keywords=[
         'preprocess',
         'functions',
@@ -22,10 +24,14 @@ setup(
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Intended Audience :: Developments',
-        'Topic :: Software Development :: Utility',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3'
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     install_requires=[],
 )
