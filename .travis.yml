@@ -9,7 +9,7 @@ python:
 install:
   - pip install codecov
 script:
-  - coverage run tests/test_purepy.py --omit="tests*"
+  - coverage run tests/test_purepy.py
 after_success:
   - codecov
 branches:

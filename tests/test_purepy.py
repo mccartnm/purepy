@@ -121,6 +121,33 @@ class BasicPurePyTestCase(common.PurePyTestCase):
             def foo(self, bar="different default"):
                 pass
 
+        self.assertEqual(len(PureVirtualMeta.virtual_functions_from_id(alt_pv_decorator.id())), 1)
+
+    def test_instance_loading_okay(self):
+        """
+        Test the abilities of the pv_allow_base_instance class variable
+        """
+        @add_metaclass(PureVirtualMeta)
+        class OkayToCreate(object):
+            pv_allow_base_instance = True
+
+            @pure_virtual
+            def okay_to_create(self):
+                raise NotImplementedError()
+
+        ok = OkayToCreate()
+
+        @add_metaclass(PureVirtualMeta)
+        class NotARealPureVirtual(object):
+
+            def okay_to_create(self):
+                raise NotImplementedError()
+
+        not_a_pv = NotARealPureVirtual()
+
+        self.assertTrue(PureVirtualMeta.is_pure_virtual_class(ok))
+        self.assertFalse(PureVirtualMeta.is_pure_virtual_class(not_a_pv))
+
 # ----------------------------------------------------------------------------------------------
 # -- Main Function to run tests
 # ----------------------------------------------------------------------------------------------

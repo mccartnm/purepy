@@ -118,7 +118,8 @@ class PureVirtualMeta(type):
         def _get_uuid():
             this_id = uuid.uuid4()
             while this_id in cls._registry:
-                this_id = uuid.uuid4() # Should never really happen
+                # We should never really get here.
+                this_id = uuid.uuid4() # pragma: no cover
             return this_id
         return cls.new_class(_get_uuid(), **kwargs)
 
@@ -223,7 +224,7 @@ class PureVirtualMeta(type):
 
 pure_virtual = PureVirtualMeta.new() # Default Global Register
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)
 
     @util.add_metaclass(PureVirtualMeta)
