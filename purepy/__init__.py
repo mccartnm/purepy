@@ -38,6 +38,7 @@ Example:
 from __future__ import absolute_import
 
 from purepy import util
+import sys
 import uuid
 import inspect
 
@@ -161,8 +162,8 @@ class PureVirtualMeta(type):
             return (' ' + cls.__file__) if hasattr(cls, '__file__') else ''
 
         def _signature(name, proper, wrong):
-            wrong_layout = inspect.signature(wrong)
-            proper_layout = inspect.signature(proper)
+            wrong_layout = util.signature(wrong)
+            proper_layout = util.signature(proper)
             return "def {name}{wrong_layout}: -> def {name}{proper_layout}:".format(**locals())
 
         def _iterate(base):
@@ -178,11 +179,12 @@ class PureVirtualMeta(type):
                     attr = getattr(cls, name)
                     if call.__code__ is attr.__code__:
                         # Check 1: Have we overloaded all functions?
-                        must_overload.add("def {}{}".format(call.__name__, inspect.signature(call)))
+                        sig = util.signature(call)
+                        must_overload.add("def {}{}".format(call.__name__, sig))
                     elif getattr(base, 'pv_explicit_args', True):
                         # Check 2: Do the arguments line up?
-                        proper = inspect.getfullargspec(call)._asdict()
-                        attr_sig = inspect.getfullargspec(attr)._asdict()
+                        proper = util.getfullargspec(call)._asdict()
+                        attr_sig = util.getfullargspec(attr)._asdict()
                         if not call._pv_strict_types:
                             proper.pop('annotations')
                             attr_sig.pop('annotations')

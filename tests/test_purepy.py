@@ -15,7 +15,7 @@ class BasicPurePyTestCase(unittest.TestCase):
         @add_metaclass(PureVirtualMeta)
         class TestPure(object):
             @pure_virtual
-            def foo(self, okay):
+            def foo(self, okay=None, **kwargs):
                 raise NotImplementedError()
         self._class = TestPure
 
