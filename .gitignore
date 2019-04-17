@@ -4,3 +4,6 @@ dist/
 wheelhouse/
 build/
 purepy.egg-info/
+.coverage
+coverage.xml
+coverage.html

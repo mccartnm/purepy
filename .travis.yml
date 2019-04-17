@@ -6,7 +6,12 @@ python:
   - "3.5"
   - "3.6"
   - "3.7"
-script: python tests/test_purepy.py
+install:
+  - pip install codecov
+script:
+  - coverage run tests/test_purepy.py --omit="tests*"
+after_success:
+  - codecov
 branches:
   only:
     - master
