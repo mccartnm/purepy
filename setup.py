@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 setup(
     name='purepy',
-    version='0.8.0',
+    version='0.8.1',
     packages=['purepy'],
     license='MIT',
     description='Minor utilites for developing pure virtual classes.',
