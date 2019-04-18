@@ -37,7 +37,7 @@ jobs:
         provider: pypi
         user: mccartnm
         password:
-          secure: DCQE0Tzn6gek87mxv4JZkQHnnxK97IDojZyV7q/xfs2F/sz8vohBJt17cH4ft7/gyFCmiHy69rXra69kxvX+2x68FDIQlzJsg2S52DpbpR448FgE/qVc3wYSxXRqeVbLY5ijPt5oLg7WqyiB1wrIBqlMROXHQjnPrA4NeitnaTIAMagF+m6MTGMAt6q2X3jg/snunnfatk+DTXYkPuFbIQ4olx3Y4knKBp4DWSyK+089Wepgs+IeCtDJqPMUfhXhR6+68+Vo1ZVvN4YMa6wdWRbLCCDpEj1Fvbc811FrkZPx3yIaiQlxho87ZxBa6ncpfY4s9brvD9LeGq59x79XCOVv0xvZgV1w3mFGFAuqWZMotbkb9Hy8kpgg6EOzRMSU2ka6AE9XL/6AAiTU/fh9neEeuqufir2H/GxaJgb/T5E2mfqvo5Jmfi+aymaPsjG/OKRjzVIeiOmq9cCkzDe1az2Or/9Vrrb3S/1UXv+HI/GE4qn8fHq8PDUusUt6dtiqUeus7OLaIAjuHie4WWGweXgWu6R2Ru9OOO7vvIQy048gEeDgYUklS/+qB/+2p1+BbYqvTtszaWpufj8KegadQyM5CRY3uMqzdntaQj6hZArHisu5hcx9CoiyVRSr8/wqIy349tw8wjhPt4318gAcvtE3q3rSq4tvf9GP1Pu0HWc=
+          secure: HwWeB0dQ3b9jdJ95CQkT+nkL7RFWtnb8pStY27pPz2bTWs2SbP51dIyMJMiMpG3kVzTNQHgraIQfjf8j4FkF+YihbdKq6X7NT+Isdc7guyIa2L4uyykHRwiQKaFYfmA95kgIQgu55Gi4mf3l5OculUvfytw1pMhV4hR/1nTPEkyjcUlGKEuRC+L0BIfxS47JuDSFzLPBDDXGdEODVChyicJmTiPkKR+b+xSXE1hnoA44gLElMwpBC9JvkjumE/f2EwwPaPtktn5cnvaO0Rc/x5z+MPs9RbXgqJiKl3+PlcYCydMPGl+SSEb3fUvAYRglCBc0PmOsLr721iTXAFlePXJpYw96dUWmG7LCQi5XbPIoKKrYmitSmT5zJoXdQaTfhchcbTHmEsm/3OtO0n/HqnUE3op2SB6kQa09RiHuoDlmt5Dd9VMqaptrPCVkQI9mh704oUa9rjVxop0ePyDzPUlcMYnZJeLK65LPk1gdSfmnBppLZ/oXqORcLV1SqWfQUshVGYIwiZL52AXAPk+gvXM0kMpDeejbhqwPZpAaGtr61rj9nWkgv5uM7R7PVb/7+YuCxYo4VZW9NQHJjj+L4SS6mR2QqngAXRHAECHQf8iHNumuibnqQzwwhcbbbfNw3lRbc/vQVLlA4slFcMFQGotCRNi9YlUifIH9o2Bgp9I=
         distributions: "sdist bdist_wheel"
         on:
           branch: production
