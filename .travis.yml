@@ -1,4 +1,3 @@
-# Building
 dist: xenial
 language: python
 python:
@@ -17,14 +16,13 @@ branches:
   only:
     - master
     - dev
-
-# Deployment
+    - production
 deploy:
   provider: pypi
   user: mccartnm
   password:
-    secure: eirCwFy4HqC/aOqjozJHIT0LZHsc7QA99JnHNPnNoEHuAua3vVQGA6dQExtGhhMakl9tgmaHPSSTuFbrFzi0+W2+ICNkF7nuN2EEJ4C/ZoW/Mt7QTHvwe5cXKyzorKWdMPgh1kZ1XwjiGHagXnRR+nSYzYqPtKz/3Op9mPTLwhJ8ON3e6OtWyqcexnaqLATSYNeMIYxDPQmcmP9M7I65I08wWMSd3aNO1gTk6vLzoHqFn/rCJv8ugOmdcwUeuSR5zN5k5/n0maPu2aiNPa6SzxIu07SPAFz0AYQAWTNw7MkjbyZh1UY9DldVJ1S4QR2B4VzgR6Iabq1xQef2RPv+gzxPOnTBxF+F1D5Vpui2Cg8PSW8ENGQHKgwh+qYJ5QOkPwxkwwNxhFeCTmQwSPcJeAMNJs6mfIkoInj2TZt2CDyah3CFl5iwkQmU6spjSo+yU+xUFF2+JEddzOWaVAFZKADHdPInGZvOlQG5ejh3/OU2nSWIJwYGaqHZAVqlmL6TQgkI7JV/7KIZfdiJ223cYGo5BqEYuNYQLj14vwjllr7A0I/AsbMo217j5milFntiBk6roGQ6LXPGTRemXCNW8pArjQye10S9yEtgEDGAlQqKN6FCApesD2/JS4pZin+gn8QQNIAYF19/1H2Jpy0jV5+uk1vV/pM9Jy19D/2yzeg=
-  distributions: sdist bdist_wheel
+    secure: rC5GdVfhsLt73grwIfIH3lhFPNiHUl7URqVl7mWgQHhD7K2pwEhAJQmPIo9d2O11NB+IXqMO6tSX6EI0hpEbku6J3Er4oWNwg87RfFPT8vuoTYqqYmqKu2B2AIgLyfRmE3HocxlDAeX/2xV0osfEPZhX0AccrZEQDE0g743koQ0OSOqPErh8Byf34uws7b4aqkpZvVLdgoafciQL0Kef5xDmAY+8cF2gQtUwLtEsmaLs0rgQmpjim3KmlJEQPZydDps9GCTjGdj1yNwWR+5jQOQNCeyZ9pZ0PlXiPtkruL1F+HlWb5PiObv6sBx/bHECGc2AhS0PoZpxlq91AKVi5pbd7cw5X3oMxjEr/hNUVP9ZWjFyBT5+z6cky3Sy5h8Zu5uXKoPP3vpHslZpH+pOYgO5oXmtRsOJsFrJYTCo4OPu5Ys5qT94i0iPv6F3gEozJF24lHPMzPO6plCsulL1cLikXax02bZ2bY9ho6tbwGT68li71CWfDlMPPwlhcc/MQgxAiSvF1+heyErctU01EINpOSzaVcKn5ISVEiK7vg9Chx9kzxEqQfUOcqgDW0vncBO+mWO9LP+x4vSetRsZXCFmT+IbQ5XZEOqtkUcI/a2JSWcJLx4kJMWAhW1MGxLZBDVgsLGabMaPHRmdk51fOB8xWWEi4QxuymieoxykSnw=
+  distributions: "sdist bdist_wheel"
   on:
-    tags: true
+    branch: production
   skip_existing: true
