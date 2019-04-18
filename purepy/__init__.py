@@ -5,10 +5,9 @@ is executed.
 
 Example:
     
-    from purepy import PureVirtualMeta
+    from purepy import PureVirtualMeta, pure_virtual
 
     class Interface(metaclass=PureVirtualMeta):
-        pure_virtual = PureVirtualMeta.new()
 
         @pure_virtual
         def save(self, filepath):
@@ -38,7 +37,7 @@ Example:
 from __future__ import absolute_import
 
 from purepy import util
-import sys
+from functools import wraps
 import uuid
 import inspect
 
@@ -97,11 +96,23 @@ class PureVirtualMeta(type):
             Decorator to splay across our pure virtual functions
             """
             func._pv_is_pure_virtual = True
-            func._pv_virtual_id = name
-            func._pv_strict_types = kwargs.get("strict_types", True)
-            func._pv_strict_defaults = kwargs.get("strict_defaults", True)
 
+            details = {
+                "_pv_virtual_id" : name,
+                "_pv_strict_types" : kwargs.get("strict_types", True),
+                "_pv_strict_defaults" : kwargs.get("strict_defaults", True),
+                "_pv_force_not_impl" : kwargs.get("force_not_implemented", True),
+            }
             cls._registry.setdefault(name, []).append(func)
+
+            if details['_pv_force_not_impl']:
+                def not_impl_wrapper(*args, **kwargs):
+                    raise NotImplementedError("Illegal call to pure virtual function {}".format(func.__name__))
+                func = util.give_signature(func, not_impl_wrapper)
+
+            for k,v in details.items():
+                setattr(func, k, v)
+
             return func
 
         pure_virtual._pv_virtual_id = name
@@ -118,7 +129,8 @@ class PureVirtualMeta(type):
         def _get_uuid():
             this_id = uuid.uuid4()
             while this_id in cls._registry:
-                this_id = uuid.uuid4() # Should never really happen
+                # We should never really get here.
+                this_id = uuid.uuid4() # pragma: no cover
             return this_id
         return cls.new_class(_get_uuid(), **kwargs)
 
@@ -223,7 +235,7 @@ class PureVirtualMeta(type):
 
 pure_virtual = PureVirtualMeta.new() # Default Global Register
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)
 
     @util.add_metaclass(PureVirtualMeta)
@@ -233,10 +245,11 @@ if __name__ == "__main__":
 
         @my_pure_virtual
         def save(self, filepath=None):
-            raise NotImplementedError()
+            print ("glarb")
 
     class Overload(Interface):
         def save(self, filepath = "bar"):
             print ("foo")
 
-    print (PureVirtualMeta.pure_virtual_functions(Interface))
+    inst = Interface()
+    inst.save()

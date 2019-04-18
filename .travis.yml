@@ -1,18 +1,30 @@
+# Building
 dist: xenial
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - '3.6'
+  - '3.7'
 install:
   - pip install codecov
 script:
-  - coverage run tests/test_purepy.py --omit="tests*"
+  - coverage run tests/test_purepy.py
 after_success:
   - codecov
 branches:
   only:
     - master
     - dev
+
+# Deployment
+deploy:
+  provider: pypi
+  user: mccartnm
+  password:
+    secure: eirCwFy4HqC/aOqjozJHIT0LZHsc7QA99JnHNPnNoEHuAua3vVQGA6dQExtGhhMakl9tgmaHPSSTuFbrFzi0+W2+ICNkF7nuN2EEJ4C/ZoW/Mt7QTHvwe5cXKyzorKWdMPgh1kZ1XwjiGHagXnRR+nSYzYqPtKz/3Op9mPTLwhJ8ON3e6OtWyqcexnaqLATSYNeMIYxDPQmcmP9M7I65I08wWMSd3aNO1gTk6vLzoHqFn/rCJv8ugOmdcwUeuSR5zN5k5/n0maPu2aiNPa6SzxIu07SPAFz0AYQAWTNw7MkjbyZh1UY9DldVJ1S4QR2B4VzgR6Iabq1xQef2RPv+gzxPOnTBxF+F1D5Vpui2Cg8PSW8ENGQHKgwh+qYJ5QOkPwxkwwNxhFeCTmQwSPcJeAMNJs6mfIkoInj2TZt2CDyah3CFl5iwkQmU6spjSo+yU+xUFF2+JEddzOWaVAFZKADHdPInGZvOlQG5ejh3/OU2nSWIJwYGaqHZAVqlmL6TQgkI7JV/7KIZfdiJ223cYGo5BqEYuNYQLj14vwjllr7A0I/AsbMo217j5milFntiBk6roGQ6LXPGTRemXCNW8pArjQye10S9yEtgEDGAlQqKN6FCApesD2/JS4pZin+gn8QQNIAYF19/1H2Jpy0jV5+uk1vV/pM9Jy19D/2yzeg=
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+  skip_existing: true
