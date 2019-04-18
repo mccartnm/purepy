@@ -123,6 +123,7 @@ class BasicPurePyTestCase(common.PurePyTestCase):
 
         self.assertEqual(len(PureVirtualMeta.virtual_functions_from_id(alt_pv_decorator.id())), 1)
 
+
     def test_instance_loading_okay(self):
         """
         Test the abilities of the pv_allow_base_instance class variable
@@ -147,6 +148,53 @@ class BasicPurePyTestCase(common.PurePyTestCase):
 
         self.assertTrue(PureVirtualMeta.is_pure_virtual_class(ok))
         self.assertFalse(PureVirtualMeta.is_pure_virtual_class(not_a_pv))
+
+    def test_force_not_impl(self):
+        """
+        Test that even defined classes with a pure virtual function, by default
+        are forced to a NotImplementedError() and show the ability to remove that
+        restrcition
+        """
+        alt_pv_decorator = PureVirtualMeta.new(force_not_implemented=False)
+
+        @add_metaclass(PureVirtualMeta)
+        class ForceImpl(object):
+            pv_allow_base_instance = True
+
+            @pure_virtual
+            def foo(self):
+                return "Cannot get to me!"
+
+            @alt_pv_decorator
+            def bar(self):
+                return "Get to me!"
+
+        inst = ForceImpl()
+
+        with self.assertRaises(NotImplementedError):
+            print (inst.foo())
+
+        self.assertEqual(inst.bar(), "Get to me!")
+
+    def test_force_impl_restrict_names(self):
+        """
+        Select argument names are not allowed for pure_virtual functions that utilize
+        forced not implemented wrapper
+        """
+        with self.assertRaisesRegex(NameError, "Cannot use '_func_'"):
+            @add_metaclass(PureVirtualMeta)
+            class ForceImpl(object):
+                @pure_virtual
+                def foo(self, _func_):
+                    return None # cannot get here
+
+        with self.assertRaisesRegex(NameError, "Cannot use '_impl_'"):
+            @add_metaclass(PureVirtualMeta)
+            class ForceImpl(object):
+                @pure_virtual
+                def foo(self, _impl_, *args):
+                    return None # cannot get here
+
 
 # ----------------------------------------------------------------------------------------------
 # -- Main Function to run tests
