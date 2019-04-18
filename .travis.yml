@@ -6,10 +6,6 @@ branches:
     - dev
     - production
 
-stages:
-  - test
-  - name: deploy
-    if: branch = production
 
 python:
   - '2.7'
@@ -18,16 +14,21 @@ python:
   - '3.6'
   - '3.7'
 
+install:
+  - pip install codecov
+script:
+  - coverage run tests/test_purepy.py
+after_success:
+  - codecov
+
+stages:
+  - test
+  - name: deploy
+    if: branch = production
+
 jobs:
   include:
     - stage: test
-      name: "Unit Tests"
-      install:
-        - pip install codecov
-      script:
-        - coverage run tests/test_purepy.py
-      after_success:
-        - codecov
     - stage: deploy
       name: "Deploy"
       python: '3.7'
