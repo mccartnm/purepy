@@ -80,6 +80,10 @@ you want to work, at which point you don't need this utility!
 
 # Additional Features
 
+To act like a proper pure virtual class, `PureVirtualMeta` and the default `pure_virtual` utilities are
+_extremely_ strict when it comes to working with the classes. There are a wide variety of ways to augment
+this however as described below.
+
 ### Signature Verification
 
 By default `purepy` will assert that the signatures of the `pure_virtual` function match the
@@ -121,6 +125,7 @@ instantiate a pure virtual class.
 ```python
 class Interface(metaclass=PureVirtualMeta):
 
+    @pure_virtual
     def save(self, filepath=None):
         raise NotImplementedError()
 
@@ -136,11 +141,46 @@ This can be disabled with the class variable `pv_allow_base_instance = True`
 class Interface(metaclass=PureVirtualMeta):
     pv_allow_base_instance = True
 
+    @pure_virtual
     def save(self, filepath=None):
         raise NotImplementedError()
 
 >>> print(Interface())
 # <__main__.Interface object at ...>
+```
+
+### Forced NotImplementedError
+
+By default, the `pure_virtual` decorator will force all it's functions to raise a `NotImplementedError` even
+when there is information defined and the class can be instantiated.
+
+```python
+class Interface(metaclass=PureVirtualMeta):
+    pv_allow_base_instance = True
+
+    @pure_virtual
+    def save(self, filepath=None):
+        print ("Saving ", str(filepath))
+>>> inst = Interface()
+>>> inst.save("foo")
+# ...
+# NotImplementedError: Illegal call to pure virtual function save
+```
+
+This can be disabled with a custom decorator by setting `force_not_implemented = False`.
+
+```python
+my_pure_virtual = PureVirtualMeta.new(force_not_implemented=False)
+
+class Interface(metaclass=PureVirtualMeta):
+    pv_allow_base_instance = True
+
+    @my_pure_virtual
+    def save(self, filepath=None):
+        print ("Saving ", filepath)
+>>> inst = Interface()
+>>> inst.save("foo")
+# Saving foo
 ```
 
 # Customized Decorator
