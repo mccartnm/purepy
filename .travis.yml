@@ -11,16 +11,17 @@ stages:
   - name: deploy
     if: branch = production
 
+python:
+  - '2.7'
+  - '3.4'
+  - '3.5'
+  - '3.6'
+  - '3.7'
+
 jobs:
   include:
     - stage: test
       name: "Unit Tests"
-      python:
-        - '2.7'
-        - '3.4'
-        - '3.5'
-        - '3.6'
-        - '3.7'
       install:
         - pip install codecov
       script:
@@ -29,12 +30,13 @@ jobs:
         - codecov
     - stage: deploy
       name: "Deploy"
+      python: '3.7'
       script: skip
       deploy: &pypi
         provider: pypi
         user: mccartnm
         password:
-          secure: rC5GdVfhsLt73grwIfIH3lhFPNiHUl7URqVl7mWgQHhD7K2pwEhAJQmPIo9d2O11NB+IXqMO6tSX6EI0hpEbku6J3Er4oWNwg87RfFPT8vuoTYqqYmqKu2B2AIgLyfRmE3HocxlDAeX/2xV0osfEPZhX0AccrZEQDE0g743koQ0OSOqPErh8Byf34uws7b4aqkpZvVLdgoafciQL0Kef5xDmAY+8cF2gQtUwLtEsmaLs0rgQmpjim3KmlJEQPZydDps9GCTjGdj1yNwWR+5jQOQNCeyZ9pZ0PlXiPtkruL1F+HlWb5PiObv6sBx/bHECGc2AhS0PoZpxlq91AKVi5pbd7cw5X3oMxjEr/hNUVP9ZWjFyBT5+z6cky3Sy5h8Zu5uXKoPP3vpHslZpH+pOYgO5oXmtRsOJsFrJYTCo4OPu5Ys5qT94i0iPv6F3gEozJF24lHPMzPO6plCsulL1cLikXax02bZ2bY9ho6tbwGT68li71CWfDlMPPwlhcc/MQgxAiSvF1+heyErctU01EINpOSzaVcKn5ISVEiK7vg9Chx9kzxEqQfUOcqgDW0vncBO+mWO9LP+x4vSetRsZXCFmT+IbQ5XZEOqtkUcI/a2JSWcJLx4kJMWAhW1MGxLZBDVgsLGabMaPHRmdk51fOB8xWWEi4QxuymieoxykSnw=
+          secure: DCQE0Tzn6gek87mxv4JZkQHnnxK97IDojZyV7q/xfs2F/sz8vohBJt17cH4ft7/gyFCmiHy69rXra69kxvX+2x68FDIQlzJsg2S52DpbpR448FgE/qVc3wYSxXRqeVbLY5ijPt5oLg7WqyiB1wrIBqlMROXHQjnPrA4NeitnaTIAMagF+m6MTGMAt6q2X3jg/snunnfatk+DTXYkPuFbIQ4olx3Y4knKBp4DWSyK+089Wepgs+IeCtDJqPMUfhXhR6+68+Vo1ZVvN4YMa6wdWRbLCCDpEj1Fvbc811FrkZPx3yIaiQlxho87ZxBa6ncpfY4s9brvD9LeGq59x79XCOVv0xvZgV1w3mFGFAuqWZMotbkb9Hy8kpgg6EOzRMSU2ka6AE9XL/6AAiTU/fh9neEeuqufir2H/GxaJgb/T5E2mfqvo5Jmfi+aymaPsjG/OKRjzVIeiOmq9cCkzDe1az2Or/9Vrrb3S/1UXv+HI/GE4qn8fHq8PDUusUt6dtiqUeus7OLaIAjuHie4WWGweXgWu6R2Ru9OOO7vvIQy048gEeDgYUklS/+qB/+2p1+BbYqvTtszaWpufj8KegadQyM5CRY3uMqzdntaQj6hZArHisu5hcx9CoiyVRSr8/wqIy349tw8wjhPt4318gAcvtE3q3rSq4tvf9GP1Pu0HWc=
         distributions: "sdist bdist_wheel"
         on:
           branch: production
