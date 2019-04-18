@@ -31,7 +31,6 @@ jobs:
     - stage: test
     - stage: deploy
       name: "Deploy"
-      python: '3.7'
       script: skip
       deploy: &pypi
         provider: pypi
@@ -41,4 +40,5 @@ jobs:
         distributions: "sdist bdist_wheel"
         on:
           branch: production
+          python: '3.7'
         skip_existing: true

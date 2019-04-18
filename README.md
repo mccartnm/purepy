@@ -6,8 +6,8 @@ A _very_ small metaclass to do some of the testing for us.
 
 Branch | Status | Coverage
 --- | --- | --
-Master | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=master)](https://travis-ci.com/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/master/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
-Dev | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=dev)](https://travis-ci.com/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/dev/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
+Master | [![Build Status](https://travis-ci.org/mccartnm/purepy.svg?branch=master)](https://travis-ci.org/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/master/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
+Dev | [![Build Status](https://travis-ci.org/mccartnm/purepy.svg?branch=dev)](https://travis-ci.org/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/dev/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
 
 
 
