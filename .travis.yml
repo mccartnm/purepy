@@ -32,7 +32,9 @@ jobs:
     - stage: deploy
       name: "Deploy"
       script: skip
+      python: '3.7'
       deploy: &pypi
+        python: '3.7'
         provider: pypi
         user: mccartnm
         password:
