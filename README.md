@@ -6,8 +6,8 @@ A _very_ small metaclass to do some of the testing for us.
 
 Branch | Status | Coverage
 --- | --- | --
-Master | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=master)](https://travis-ci.com/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/master/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
-Dev | [![Build Status](https://travis-ci.com/mccartnm/purepy.svg?branch=dev)](https://travis-ci.com/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/dev/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
+`master` | [![Build Status](https://travis-ci.org/mccartnm/purepy.svg?branch=master)](https://travis-ci.org/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/master/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
+`dev` | [![Build Status](https://travis-ci.org/mccartnm/purepy.svg?branch=dev)](https://travis-ci.org/mccartnm/purepy) | [![Code Coverage](https://codecov.io/gh/mccartnm/purepy/branch/dev/graph/badge.svg)](https://codecov.io/gh/mccartnm/purepy)
 
 
 
@@ -244,6 +244,29 @@ print (PureVirtualMeta.pure_virtual_functions(Interface()))
 print (PureVirtualMeta.is_pure_virtual_class(Interface))
 # True
 ```
+
+# Override Decorator
+For clarity, we may want to decorate the overloaded functions. In C++ we use something like:
+
+```cpp
+    void myFunction(int variable) override;
+```
+
+`purepy` provides the `override` decorator this this purpose.
+
+```python
+from purepy import override
+class Overload(Interface):
+
+    @override()
+    def foo(self, filepath):
+        print ("This is overloaded")
+```
+
+> Note: You _must_ call the override decorator, even with no arguments, to setup the proper function
+> binding.
+
+In the future, this may to be used to further augment the functionality of overloaded functions.
 
 [1]:(https://docs.python.org/3/library/abc.html#abc.abstractmethod)
 [2]:(https://docs.python.org/3/library/abc.html)

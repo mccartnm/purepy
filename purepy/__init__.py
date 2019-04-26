@@ -36,15 +36,17 @@ Example:
 """
 from __future__ import absolute_import
 
-from purepy import util
-from functools import wraps
 import uuid
 import inspect
+from purepy import util
+from functools import wraps
 
+# -- :EXPORT:
 class PureVirtualError(Exception):
     """ General Error for purepy """
     pass
 
+# -- :EXPORT:
 class PureVirtualMeta(type):
     """
     The metaclass that handles our virtual class.
@@ -189,6 +191,11 @@ class PureVirtualMeta(type):
 
                 if getattr(call, '_pv_is_pure_virtual', None):
                     attr = getattr(cls, name)
+
+                    # For override decorator
+                    if getattr(attr, '_pv_override', False):
+                        attr = attr.pv_overloaded_function
+
                     if call.__code__ is attr.__code__:
                         # Check 1: Have we overloaded all functions?
                         sig = util.signature(call)
@@ -198,7 +205,7 @@ class PureVirtualMeta(type):
                         proper = util.getfullargspec(call)._asdict()
                         attr_sig = util.getfullargspec(attr)._asdict()
 
-                        if not call._pv_strict_types:
+                        if not call._pv_strict_types and util.PY3:
                             proper.pop('annotations')
                             attr_sig.pop('annotations')
                         if not call._pv_strict_defaults:
@@ -233,7 +240,32 @@ class PureVirtualMeta(type):
 
         list(map(_iterate, bases)) # Cast to list for Python 3
 
+
+# -- :EXPORT:
 pure_virtual = PureVirtualMeta.new() # Default Global Register
+
+
+# -- :EXPORT:
+class override(object):
+    """
+    In the future this decorator may be able to do more but for now it's a
+    simple passthrough developers can use to mark their functions as
+    overloaded for ease-of-use
+    """
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __call__(self, function, *args, **kwargs):
+        self._function = function
+
+        @wraps(function)
+        def _wrapper(*args, **kwargs):
+            return function(*args, **kwargs)
+
+        _wrapper._pv_override = True
+        _wrapper.pv_overloaded_function = self._function
+        return _wrapper
+
 
 if __name__ == "__main__": # pragma: no cover
     my_pure_virtual = PureVirtualMeta.new(strict_types=False, strict_defaults=False)

@@ -7,7 +7,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import unittest
-from purepy import PureVirtualMeta, PureVirtualError, pure_virtual
+from purepy import PureVirtualMeta, PureVirtualError, pure_virtual, override
 from purepy.util import add_metaclass, PY3
 
 from tests import common
@@ -194,6 +194,27 @@ class BasicPurePyTestCase(common.PurePyTestCase):
                 @pure_virtual
                 def foo(self, _impl_, *args):
                     return None # cannot get here
+
+
+    def test_override_decorator(self):
+        """
+        Make sure the override decorator works as expected
+        """
+
+        @add_metaclass(PureVirtualMeta)
+        class ForceImpl(self._class):
+
+            @override()
+            def foo(self, okay=None, **kwargs):
+                return True
+
+            @override()
+            def bar(self, path):
+                return False
+
+        inst = ForceImpl()
+        self.assertTrue(inst.foo(blarg=True) is True)
+        self.assertTrue(inst.bar('some_path') is False)
 
 
 # ----------------------------------------------------------------------------------------------
