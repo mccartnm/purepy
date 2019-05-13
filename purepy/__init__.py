@@ -37,6 +37,7 @@ Example:
 from __future__ import absolute_import
 
 import uuid
+import types
 import inspect
 from purepy import util
 from functools import wraps
@@ -187,7 +188,9 @@ class PureVirtualMeta(type):
             must_overload = set()
             wrong_signature = set()
 
-            for name, call in inspect.getmembers(base, predicate=inspect.isroutine):
+            for name, call in inspect.getmembers(base,
+                lambda o: isinstance(o, (types.MethodType, types.FunctionType)) and not isinstance(o, property)
+            ):
 
                 if getattr(call, '_pv_is_pure_virtual', None):
                     attr = getattr(cls, name)
